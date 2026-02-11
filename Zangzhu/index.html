@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务器赞助 - 二次元主题</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff7eb9;
+            --secondary-color: #7afcff;
+            --accent-color: #ff65a3;
+            --dark-color: #1a1a2e;
+            --light-color: #f9f9f9;
+            --glass-color: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: url('./DG/124177.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.7);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* 毛玻璃卡片样式 */
+        .glass-card {
+            background: var(--glass-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+        }
+
+        .section-title i {
+            font-size: 1.5rem;
+        }
+
+        /* 支付方式区域 */
+        .payment-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .payment-method {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .payment-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .payment-title.wechat {
+            color: #07c160;
+        }
+
+        .payment-title.alipay {
+            color: #1677ff;
+        }
+
+        .qrcode-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .qrcode {
+            width: 220px;
+            height: 220px;
+            background-color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            margin: 0 auto;
+            color: #333;
+        }
+
+        .qrcode.wechat { color: #07c160; }
+        .qrcode.alipay { color: #1677ff; }
+
+        .payment-desc {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* 赞助人列表 */
+        .supporters-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .supporter {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .supporter:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .supporter-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .supporter-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .supporter-amount {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            opacity: 0.9;
+        }
+
+        /* 背景选择器 */
+        .background-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .bg-option {
+            width: 100px;
+            height: 70px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .bg-option:hover {
+            transform: scale(1.05);
+        }
+
+        .bg-option.active {
+            border-color: var(--primary-color);
+        }
+
+        .bg-preview {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .payment-method {
+                min-width: 100%;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .supporters-container {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo floating">✨ 服务器赞助 （服务器续命）✨</h1>
+            <p class="subtitle">感谢您对服务器的支持！您的赞助将帮助我们保持服务器稳定运行并添加更多有趣的功能。谢谢主人喵~</p>
+        </header>
+
+        <main>
+            <!-- 支付方式区域 -->
+            <section class="glass-card">
+                <h2 class="section-title"><i class="fas fa-donate"></i> 支持方式</h2>
+                <p style="margin-bottom: 20px;">您可以通过以下方式赞助我们的服务器，没有资金限制喵~</p>
+                
+                <div class="payment-section">
+                    <div class="payment-method">
+                        <h3 class="payment-title wechat"><i class="fab fa-weixin"></i> 微信支付</h3>
+                        <div class="qrcode-container">
+                            <div class="qrcode wechat">
+                                <img src="./WeChat/We.png" ></i>
+                            </div>
+                        </div>
+                        <p class="payment-desc">打开微信扫描二维码进行赞助</p>
+                    </div>
+                    
+                    <div class="payment-method">
+                        <h3 class="payment-title alipay"><i class="fab fa-alipay"></i> 支付宝</h3>
+                        <div class="qrcode-container">
+                            <div class="qrcode alipay">
+                               <img src="./WeChat/Zhi.png" ></i>
+                            </div>
+                        </div>
+                        <p class="payment-desc">打开支付宝扫描二维码进行赞助</p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- 背景选择器 -->
+          
+
+        <footer>
+            <p>© 2026 CatCraft 服务器赞助页面 | 感谢每一位支持者的贡献！</p>
+            <p style="margin-top: 10px;">本页面仅用于展示赞助信息，不存储任何支付数据</p>
+        </footer>
+    </div>
+
+    <script>
+
+
+
+        // 背景选择功能
+        function setupBackgroundSelector() {
+            const bgOptions = document.querySelectorAll('.bg-option');
+            const customBgInput = document.getElementById('customBg');
+            const applyBgButton = document.getElementById('applyBg');
+            
+            // 预设背景点击事件
+            bgOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // 移除所有active类
+                    bgOptions.forEach(opt => opt.classList.remove('active'));
+                    // 添加active类到当前选项
+                    this.classList.add('active');
+                    // 更改背景
+                    const bgUrl = this.getAttribute('data-bg');
+                    document.body.style.backgroundImage = `url('${bgUrl}')`;
+                    // 清空自定义输入
+                    customBgInput.value = '';
+                });
+            });
+            
+            // 应用自定义背景
+            applyBgButton.addEventListener('click', function() {
+                const bgUrl = customBgInput.value.trim();
+                if (bgUrl) {
+                    // 移除所有active类
+                    bgOptions.forEach(opt => opt.classList.remove('active'));
+                    // 更改背景
+                    document.body.style.backgroundImage = `url('${bgUrl}')`;
+                } else {
+                    alert('请输入有效的图片URL');
+                }
+            });
+            
+            // 按Enter键也可以应用自定义背景
+            customBgInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    applyBgButton.click();
+                }
+            });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSupporters();
+            setupBackgroundSelector();
+            
+            // 添加一些交互效果
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.3)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)';
+                });
+            });
+            
+            // 模拟动态添加新赞助人（演示用）
+            setTimeout(() => {
+                const newSupporter = { id: "NewHero", amount: 45, avatar: "🦸" };
+                supporters.unshift(newSupporter);
+                loadSupporters();
+                
+                // 显示新赞助人通知
+                const notification = document.createElement('div');
+                notification.innerHTML = `<span class="highlight">${newSupporter.id}</span> 刚刚赞助了 ¥${newSupporter.amount}！`;
+                notification.style.position = 'fixed';
+                notification.style.top = '20px';
+                notification.style.right = '20px';
+                notification.style.background = 'linear-gradient(135deg, var(--primary-color), var(--accent-color))';
+                notification.style.color = 'white';
+                notification.style.padding = '15px 25px';
+                notification.style.borderRadius = '10px';
+                notification.style.zIndex = '1000';
+                notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+                notification.style.animation = 'float 2s ease-in-out';
+                
+                document.body.appendChild(notification);
+                
+                // 5秒后移除通知
+                setTimeout(() => {
+                    notification.style.transition = 'opacity 0.5s ease';
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 500);
+                }, 5000);
+            }, 10000);
+        });
+    </script>
+</body>
+</html>
